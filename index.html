@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Heritage & Tourism Guide</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('square.jpg');; /* Light background color */
+            color: #333; /* Text color */
+        }
+        
+        header {
+            background-color: #333;
+            color: lightblue;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between; /* Align items horizontally */
+            align-items: center; /* Center items vertically */
+        }
+        
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        
+        nav ul li {
+            margin-left: 20px; /* Adjust spacing between navigation links */
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        main {
+            padding: 20px;
+        }
+        
+        section {
+            margin-bottom: 30px;
+        }
+        
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer; /* Added cursor pointer for clickable boxes */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
+        }
+
+        .box:hover {
+            background-color: lightblue; /* Change background color on hover */
+            color: white; /* Change text color on hover */
+        }
+
+        .box h2 {
+            margin-top: 0;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Hamburger menu icon styles */
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background-color: #333;
+                position: absolute;
+                top: 60px; /* Height of the header */
+                left: 0;
+                width: 100%;
+                padding: 0;
+            }
+            
+            nav ul li {
+                margin: 0;
+                text-align: center;
+            }
+            
+            .menu-icon {
+                display: block;
+            }
+
+            .menu-icon.active + nav ul {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cultural Heritage & Tourism Guide</h1>
+        <button class="menu-icon" onclick="toggleMenu()">☰</button>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="home">
+            <h2>Welcome to Cultural Heritage & Tourism Guide</h2>
+            <div class="box" onclick="openModal('picturesModal')">
+                <h2>View Tourist Pictures</h2>
+                <p>Click here to view pictures of tourist sites.</p>
+            </div>
+
+            <div class="box" onclick="openModal('locationsModal')">
+                <h2>Tourist Locations</h2>
+                <p>Click here to see tourist areas in Ghana.</p>
+            </div>
+
+            <div class="box" onclick="openModal('bookingModal')">
+                <h2>Book Tourist Sites</h2>
+                <p>Click here to book a tourist site visit.</p>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Modals -->
+    <div id="picturesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('picturesModal')">&times;</span>
+            <h2>View Tourist Pictures</h2>
+            <!-- Hard-coded tourist pictures -->
+            <img src="boti.jpg" alt="Tourist Site 1">
+            <img src="cap coast.jpg" alt="Tourist Site 2">
+            <img src="park.jpg" alt="Tourist Site 2">
+            <img src="square.jpg" alt="Tourist Site 2">
+            <img src="wli-falls.jpg" alt="Tourist Site 2">
+            <img src="falls.jpg" alt="Tourist Site 2">
+            <img src="bridge.jpg" alt="Tourist Site 2">
+            <!-- Add more images as needed -->
+        </div>
+    </div>
+
+    <div id="locationsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('locationsModal')">&times;</span>
+            <h2>Tourist Locations</h2>
+            <p>Kakum National Park - Cape Coast region</p>
+            <p>Mole National Park - Northern region</p>
+            <p>Aburi Botanical Gardens - Eastern region</p>
+            <p>Elmina Castle - Cape Coast</p>
+            <!-- Add more locations as needed -->
+        </div>
+    </div>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('bookingModal')">&times;</span>
+            <h2>Book Tourist Sites</h2>
+            <form onsubmit="submitForm(event)">
+                <label for="visitDate">Visit Date:</label>
+                <input type="date" id="visitDate" name="visitDate" required><br><br>
+
+                <label for="numVisitors">Number of Visitors:</label>
+                <input type="number" id="numVisitors" name="numVisitors" required><br><br>
+
+                <label for="nationality">Nationality:</label>
+                <select id="nationality" name="nationality" required>
+                    <option value="Ghanaian">Ghanaian</option>
+                    <option value="Nigerian">Nigerian</option>
+                    <option value="American">American</option>
+                    <!-- Add more nationalities as needed -->
+                </select><br><br>
+
+                <label for="touristSite">Select Tourist Site:</label>
+                <select id="touristSite" name="touristSite" required>
+                    <option value="Kakum National Park">Kakum National Park - Cape Coast region</option>
+                    <option value="Mole National Park">Mole National Park - Northern region</option>
+                    <option value="Aburi Botanical Gardens">Aburi Botanical Gardens - Eastern region</option>
+                    <option value="Elmina Castle">Elmina Castle - Cape Coast</option>
+                    <!-- Add more tourist sites as needed -->
+                </select><br><br>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Cultural Heritage & Tourism Guide</p>
+    </footer>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function submitForm(event) {
+            event.preventDefault(); // Prevent default form submission
+            // Display submitted successfully message
+            alert('Your request has been submitted successfully!');
+            closeModal('bookingModal'); // Close the modal after submission
+        }
+
+        function toggleMenu() {
+            var menuIcon = document.querySelector('.menu-icon');
+            var navList = document.querySelector('nav ul');
+
+            menuIcon.classList.toggle('active');
+            navList.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
