@@ -1,0 +1,214 @@
+<script>
+    // ADMIN PANEL FUNCTIONALITY
+    const ADMIN_CREDENTIALS = {
+        username: "admin",
+        password: "traditech2025"
+    };
+    
+    let allBookings = JSON.parse(localStorage.getItem('traditechBookings')) || [];
+    
+    function calculateCommission(total) {
+        return total * 0.15;
+    }
+    
+    // Modified to work with site bookings only
+    function saveBooking(booking) {
+        // For site bookings, we'll assume a fixed price of $20 per visitor
+        const sitePrice = 20;
+        booking.totalCost = booking.numVisitors * sitePrice;
+        booking.commission = calculateCommission(booking.totalCost);
+        booking.adminEarnings = booking.totalCost - booking.commission;
+        booking.bookingDate = new Date().toISOString();
+        
+        allBookings.push(booking);
+        localStorage.setItem('traditechBookings', JSON.stringify(allBookings));
+    }
+    
+    // Modify your existing booking form submission
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        currentBooking = {
+            site: document.getElementById('selectedSite').value,
+            visitDate: document.getElementById('visitDate').value,
+            numVisitors: document.getElementById('numVisitors').value,
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            nationality: document.getElementById('nationality').value
+        };
+        
+        // Save to admin system
+        saveBooking(currentBooking);
+        
+        // Show receipt (modified for site-only booking)
+        displaySiteReceipt();
+        closeModal('bookingModal');
+        document.getElementById('receiptModal').style.display = "block";
+    });
+    
+    function displaySiteReceipt() {
+        document.getElementById('receiptSite').textContent = currentBooking.site;
+        document.getElementById('receiptVisitDate').textContent = currentBooking.visitDate;
+        document.getElementById('receiptVisitors').textContent = currentBooking.numVisitors;
+        document.getElementById('receiptTotal').textContent = '$' + currentBooking.totalCost.toFixed(2);
+        
+        document.getElementById('receiptCustomerName').textContent = currentBooking.fullName;
+        document.getElementById('receiptEmail').textContent = currentBooking.email;
+        document.getElementById('receiptPhone').textContent = currentBooking.phone;
+        document.getElementById('receiptNationality').textContent = currentBooking.nationality;
+        
+        // Hide hotel-related receipt elements
+        document.querySelectorAll('.receipt-item').forEach(item => {
+            if (item.textContent.includes('Hotel')) {
+                item.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+<style>
+    /* Admin Panel Styles */
+    .admin-panel { display: none; }
+    #adminLogin {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #adminDashboard { display: none; padding: 20px; }
+    .admin-nav {
+        background: #333;
+        color: #fff;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin: 20px 0;
+    }
+    .stat-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    th, td { padding: 12px; text-align: left; border: 1px solid #ddd; }
+    th { background-color: #333; color: white; }
+    tr:nth-child(even) { background-color: #f2f2f2; }
+</style>
+
+<div id="adminPanel" class="admin-panel">
+    <div id="adminLogin">
+        <h2>Admin Login</h2>
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="adminUsername">Username:</label>
+                <input type="text" id="adminUsername" required>
+            </div>
+            <div class="form-group">
+                <label for="adminPassword">Password:</label>
+                <input type="password" id="adminPassword" required>
+            </div>
+            <button type="submit" class="book-btn">Login</button>
+        </form>
+    </div>
+    
+    <div id="adminDashboard">
+        <div class="admin-nav">
+            <h2>TRADITECH Admin Panel</h2>
+            <button onclick="logoutAdmin()" class="book-btn">Logout</button>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total Bookings</h3>
+                <div class="stat-value" id="totalBookings">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Revenue</h3>
+                <div class="stat-value" id="totalRevenue">$0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Your Earnings (15%)</h3>
+                <div class="stat-value" id="totalEarnings">$0</div>
+            </div>
+        </div>
+        
+        <h3>Recent Bookings</h3>
+        <table id="bookingsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Tour Site</th>
+                    <th>Visitors</th>
+                    <th>Total</th>
+                    <th>Your Cut</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Admin Panel Functions
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('adminUsername').value;
+        const password = document.getElementById('adminPassword').value;
+        
+        if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+            document.getElementById('adminLogin').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            loadAdminDashboard();
+        } else {
+            alert('Invalid credentials');
+        }
+    });
+    
+    function loadAdminDashboard() {
+        document.getElementById('totalBookings').textContent = allBookings.length;
+        
+        const totalRevenue = allBookings.reduce((sum, booking) => sum + booking.totalCost, 0);
+        document.getElementById('totalRevenue').textContent = '$' + totalRevenue.toFixed(2);
+        
+        const totalEarnings = allBookings.reduce((sum, booking) => sum + booking.commission, 0);
+        document.getElementById('totalEarnings').textContent = '$' + totalEarnings.toFixed(2);
+        
+        const tbody = document.querySelector('#bookingsTable tbody');
+        tbody.innerHTML = '';
+        
+        allBookings.forEach((booking, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${booking.fullName}</td>
+                <td>${booking.site}</td>
+                <td>${booking.numVisitors}</td>
+                <td>$${booking.totalCost.toFixed(2)}</td>
+                <td>$${booking.commission.toFixed(2)}</td>
+                <td>${new Date(booking.bookingDate).toLocaleDateString()}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+    
+    function logoutAdmin() {
+        document.getElementById('adminLogin').style.display = 'block';
+        document.getElementById('adminDashboard').style.display = 'none';
+    }
+</script>
