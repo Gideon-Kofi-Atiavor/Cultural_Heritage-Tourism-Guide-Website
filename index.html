@@ -325,6 +325,158 @@
             background-color: #f2f2f2; 
         }
 
+        /* Hotel Booking Styles */
+        .hotels-tab {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .hotels-tab button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+        
+        .hotels-tab button.active {
+            background-color: #4CAF50;
+        }
+        
+        .hotels-container {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .hotel-box {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .hotel-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hotel-box img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .hotel-box h3 {
+            color: #333;
+            margin: 10px 0;
+        }
+        
+        .hotel-box p {
+            color: #555;
+            margin: 5px 0;
+        }
+        
+        .hotel-box .price {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 1.2rem;
+        }
+        
+        .hotel-box .rating {
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        .hotel-box .location {
+            color: #777;
+        }
+        
+        .hotel-box .book-hotel-btn {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .hotel-box .book-hotel-btn:hover {
+            background-color: #0b7dda;
+        }
+        
+        /* Hotel Booking Modal */
+        #hotelBookingModal .modal-content {
+            max-width: 600px;
+        }
+        
+        .room-selection {
+            margin: 15px 0;
+        }
+        
+        .room-option {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .room-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .room-option.selected {
+            background-color: #e1f5fe;
+            border-color: #4CAF50;
+        }
+        
+        .room-option h4 {
+            margin: 0 0 5px 0;
+        }
+        
+        .room-option p {
+            margin: 5px 0;
+        }
+        
+        .amenities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .amenity-tag {
+            background-color: #e0e0e0;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .hotel-receipt .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .hotel-receipt .receipt-total {
+            font-weight: bold;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
         @media screen and (max-width: 768px) {
             nav ul {
                 display: none;
@@ -366,6 +518,10 @@
             .stats-container {
                 grid-template-columns: 1fr;
             }
+            
+            .hotels-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -383,54 +539,159 @@
     </header>
     
     <main id="home">
-        <h2>Explore Ghana's Top Tourist Attractions</h2>
-        <div class="attractions-container">
-            <!-- Attraction 1 -->
-            <div class="attraction-box" onclick="openAttractionModal('kakumModal')">
-                <img src="Assets/kakum national park.jpg" alt="Kakum National Park">
-                <h3>Kakum National Park</h3>
-                <p><strong>Location:</strong> Cape Coast, Central Region</p>
-                <p>Kakum is home to Africa's famous canopy walkway, suspended 30 meters above the ground, offering a unique perspective of the rainforest.</p>
+        <div class="hotels-tab">
+            <button id="showAttractions" class="active" onclick="showSection('attractions')">Tourist Attractions</button>
+            <button id="showHotels" onclick="showSection('hotels')">Nearby Hotels</button>
+        </div>
+        
+        <div id="attractionsSection">
+            <h2>Explore Ghana's Top Tourist Attractions</h2>
+            <div class="attractions-container">
+                <!-- Attraction 1 -->
+                <div class="attraction-box" onclick="openAttractionModal('kakumModal')">
+                    <img src="Assets/kakum national park.jpg" alt="Kakum National Park">
+                    <h3>Kakum National Park</h3>
+                    <p><strong>Location:</strong> Cape Coast, Central Region</p>
+                    <p>Kakum is home to Africa's famous canopy walkway, suspended 30 meters above the ground, offering a unique perspective of the rainforest.</p>
+                </div>
+                
+                <!-- Attraction 2 -->
+                <div class="attraction-box" onclick="openAttractionModal('moleModal')">
+                    <img src="Assets/mole national park.jpg" alt="Mole National Park">
+                    <h3>Mole National Park</h3>
+                    <p><strong>Location:</strong> Northern Region</p>
+                    <p>Ghana's largest wildlife refuge, known for its elephants, antelopes, and over 90 mammal species in the savanna ecosystem.</p>
+                </div>
+                
+                <!-- Attraction 3 -->
+                <div class="attraction-box" onclick="openAttractionModal('elminaModal')">
+                    <img src="Assets/elmina castle.jpg" alt="Elmina Castle">
+                    <h3>Elmina Castle</h3>
+                    <p><strong>Location:</strong> Elmina, Central Region</p>
+                    <p>A UNESCO World Heritage Site built in 1482, this was the first European slave-trading post in sub-Saharan Africa.</p>
+                </div>
+                
+                <!-- Attraction 4 -->
+                <div class="attraction-box" onclick="openAttractionModal('botiModal')">
+                    <img src="Assets/boti.jpg" alt="Boti Falls">
+                    <h3>Boti Falls</h3>
+                    <p><strong>Location:</strong> Eastern Region</p>
+                    <p>These twin falls are a spectacular sight, especially during the rainy season when they merge into a single fall.</p>
+                </div>
+                
+                <!-- Attraction 5 -->
+                <div class="attraction-box" onclick="openAttractionModal('wliModal')">
+                    <img src="Assets/wli-falls.jpg" alt="Wli Waterfalls">
+                    <h3>Wli Waterfalls</h3>
+                    <p><strong>Location:</strong> Volta Region</p>
+                    <p>The highest waterfall in West Africa, with a drop of about 80 meters, located in the lush Agumatsa Wildlife Sanctuary.</p>
+                </div>
+                
+                <!-- Attraction 6 -->
+                <div class="attraction-box" onclick="openAttractionModal('aburiModal')">
+                    <img src="Assets/Aburi.jpg" alt="Aburi Botanical Gardens">
+                    <h3>Aburi Botanical Gardens</h3>
+                    <p><strong>Location:</strong> Eastern Region</p>
+                    <p>Established in 1890, these gardens feature a stunning collection of tropical plants and offer panoramic views of Accra.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="hotelsSection" class="hotels-container">
+            <!-- Hotel 1 - Near Kakum -->
+            <div class="hotel-box">
+                <img src="Assets/hotel-rainforest.jpg" alt="Rainforest Lodge">
+                <h3>Rainforest Lodge</h3>
+                <p class="location">Cape Coast (Near Kakum National Park)</p>
+                <p class="rating">★★★★☆ (4.2/5)</p>
+                <p>Eco-friendly lodge with stunning rainforest views, just 5km from Kakum National Park.</p>
+                <div class="amenities-list">
+                    <span class="amenity-tag">Free WiFi</span>
+                    <span class="amenity-tag">Restaurant</span>
+                    <span class="amenity-tag">Pool</span>
+                </div>
+                <p class="price">$85/night</p>
+                <button class="book-hotel-btn" onclick="openHotelBooking('Rainforest Lodge', 85, 'hotel1')">Book Now</button>
             </div>
             
-            <!-- Attraction 2 -->
-            <div class="attraction-box" onclick="openAttractionModal('moleModal')">
-                <img src="Assets/mole national park.jpg" alt="Mole National Park">
-                <h3>Mole National Park</h3>
-                <p><strong>Location:</strong> Northern Region</p>
-                <p>Ghana's largest wildlife refuge, known for its elephants, antelopes, and over 90 mammal species in the savanna ecosystem.</p>
+            <!-- Hotel 2 - Near Mole -->
+            <div class="hotel-box">
+                <img src="Assets/hotel-savanna.jpg" alt="Savanna View Hotel">
+                <h3>Savanna View Hotel</h3>
+                <p class="location">Tamale (Near Mole National Park)</p>
+                <p class="rating">★★★☆☆ (3.8/5)</p>
+                <p>Comfortable hotel with safari-style rooms, located 30km from Mole National Park.</p>
+                <div class="amenities-list">
+                    <span class="amenity-tag">Free WiFi</span>
+                    <span class="amenity-tag">Airport Shuttle</span>
+                    <span class="amenity-tag">Bar</span>
+                </div>
+                <p class="price">$65/night</p>
+                <button class="book-hotel-btn" onclick="openHotelBooking('Savanna View Hotel', 65, 'hotel2')">Book Now</button>
             </div>
             
-            <!-- Attraction 3 -->
-            <div class="attraction-box" onclick="openAttractionModal('elminaModal')">
-                <img src="Assets/elmina castle.jpg" alt="Elmina Castle">
-                <h3>Elmina Castle</h3>
-                <p><strong>Location:</strong> Elmina, Central Region</p>
-                <p>A UNESCO World Heritage Site built in 1482, this was the first European slave-trading post in sub-Saharan Africa.</p>
+            <!-- Hotel 3 - Near Elmina -->
+            <div class="hotel-box">
+                <img src="Assets/hotel-coastal.jpg" alt="Coastal Resort">
+                <h3>Coastal Resort</h3>
+                <p class="location">Elmina (Near Elmina Castle)</p>
+                <p class="rating">★★★★☆ (4.5/5)</p>
+                <p>Beachfront resort with ocean views, just 2km from Elmina Castle.</p>
+                <div class="amenities-list">
+                    <span class="amenity-tag">Beach Access</span>
+                    <span class="amenity-tag">Spa</span>
+                    <span class="amenity-tag">Free Breakfast</span>
+                </div>
+                <p class="price">$120/night</p>
+                <button class="book-hotel-btn" onclick="openHotelBooking('Coastal Resort', 120, 'hotel3')">Book Now</button>
             </div>
             
-            <!-- Attraction 4 -->
-            <div class="attraction-box" onclick="openAttractionModal('botiModal')">
-                <img src="Assets/boti.jpg" alt="Boti Falls">
-                <h3>Boti Falls</h3>
-                <p><strong>Location:</strong> Eastern Region</p>
-                <p>These twin falls are a spectacular sight, especially during the rainy season when they merge into a single fall.</p>
+            <!-- Hotel 4 - Near Boti Falls -->
+            <div class="hotel-box">
+                <img src="Assets/hotel-mountain.jpg" alt="Mountain Retreat">
+                <h3>Mountain Retreat</h3>
+                <p class="location">Koforidua (Near Boti Falls)</p>
+                <p class="rating">★★★★☆ (4.3/5)</p>
+                <p>Peaceful retreat with mountain views, 15km from Boti Falls.</p>
+                <div class="amenities-list">
+                    <span class="amenity-tag">Scenic Views</span>
+                    <span class="amenity-tag">Hiking Trails</span>
+                    <span class="amenity-tag">Restaurant</span>
+                </div>
+                <p class="price">$75/night</p>
+                <button class="book-hotel-btn" onclick="openHotelBooking('Mountain Retreat', 75, 'hotel4')">Book Now</button>
             </div>
             
-            <!-- Attraction 5 -->
-            <div class="attraction-box" onclick="openAttractionModal('wliModal')">
-                <img src="Assets/wli-falls.jpg" alt="Wli Waterfalls">
-                <h3>Wli Waterfalls</h3>
-                <p><strong>Location:</strong> Volta Region</p>
-                <p>The highest waterfall in West Africa, with a drop of about 80 meters, located in the lush Agumatsa Wildlife Sanctuary.</p>
+            <!-- Hotel 5 - Near Wli Falls -->
+            <div class="hotel-box">
+                <img src="Assets/hotel-waterfall.jpg" alt="Waterfall Lodge">
+                <h3>Waterfall Lodge</h3>
+                <p class="location">Hohoe (Near Wli Waterfalls)</p>
+                <p class="rating">★★★★★ (4.7/5)</p>
+                <p>Luxury lodge with views of the surrounding mountains, 10km from Wli Waterfalls.</p>
+                <div class="amenities-list">
+                    <span class="amenity-tag">Infinity Pool</span>
+                    <span class="amenity-tag">Spa</span>
+                    <span class="amenity-tag">Guided Tours</span>
+                </div>
+                <p class="price">$150/night</p>
+                <button class="book-hotel-btn" onclick="openHotelBooking('Waterfall Lodge', 150, 'hotel5')">Book Now</button>
             </div>
             
-            <!-- Attraction 6 -->
-            <div class="attraction-box" onclick="openAttractionModal('aburiModal')">
-                <img src="Assets/Aburi.jpg" alt="Aburi Botanical Gardens">
-                <h3>Aburi Botanical Gardens</h3>
-                <p><strong>Location:</strong> Eastern Region</p>
-                <p>Established in 1890, these gardens feature a stunning collection of tropical plants and offer panoramic views of Accra.</p>
+            <!-- Hotel 6 - Near Aburi Gardens -->
+            <div class="hotel-box">
+                <img src="Assets/hotel-boutique.jpg" alt="Boutique Garden Hotel">
+                <h3>Boutique Garden Hotel</h3>
+                <p class="location">Aburi (Near Botanical Gardens)</p>
+                <p class="rating">★★★★☆ (4.4/5)</p>
+                <p>Charming boutique hotel surrounded by gardens, walking distance to Aburi Botanical Gardens.</p>
+                <div class="amenities-list">
+                    <span class="amenity-tag">Garden View</span>
+                    <span class="amenity-tag">Free Parking</span>
+                    <span class="amenity-tag">Café</span>
+                </div>
+                <p class="price">$95/night</p>
+                <button class="book-hotel-btn" onclick="openHotelBooking('Boutique Garden Hotel', 95, 'hotel6')">Book Now</button>
             </div>
         </div>
     </main>
@@ -464,12 +725,12 @@
             <p>Mole National Park is Ghana's largest wildlife refuge. The park is located in northwest Ghana on grassland savanna and riparian ecosystems. Its animals include elephants, warthogs, antelopes, and over 300 bird species. Visitors can take safari walks and drives to view wildlife.</p>
             
             <div class="gallery">
-                <img src="mole1.jpg" alt="Mole Elephants">
-                <img src="mole2.jpg" alt="Mole Safari">
-                <img src="mole3.jpg" alt="Mole Landscape">
-                <img src="mole4.jpg" alt="Mole Antelopes">
-                <img src="mole5.jpg" alt="Mole Lodge">
-                <img src="mole6.jpg" alt="Mole Birds">
+                <img src="Assets/mole1.jpg" alt="Mole Elephants">
+                <img src="Assets/mole2.jpg" alt="Mole Safari">
+                <img src="Assets/mole3.jpg" alt="Mole Landscape">
+                <img src="Assets/mole4.jpg" alt="Mole Antelopes">
+                <img src="Assets/mole5.jpg" alt="Mole Lodge">
+                <img src="Assets/elmina6.jpg" alt="Mole Birds">
             </div>
             
             <button class="book-btn" onclick="openBookingForm('Mole National Park', 'moleModal')">Book This Site</button>
@@ -544,12 +805,12 @@
             <p>The Aburi Botanical Gardens were established in 1890 as a place of research into tropical plants and as a sanatorium for colonial officials. The gardens feature a stunning collection of tropical plants, trees and flowers, and offer panoramic views of Accra and the surrounding area.</p>
             
             <div class="gallery">
-                <img src="aburi1.jpg" alt="Aburi Gardens Entrance">
-                <img src="aburi2.jpg" alt="Aburi Gardens Plants">
-                <img src="aburi3.jpg" alt="Aburi Gardens Trees">
-                <img src="aburi4.jpg" alt="Aburi Gardens View">
-                <img src="aburi5.jpg" alt="Aburi Gardens Flowers">
-                <img src="aburi6.jpg" alt="Aburi Gardens Landscape">
+                <img src="Assets/aburi1.jpg" alt="Aburi Gardens Entrance">
+                <img src="Assets/aburi2.jpg" alt="Aburi Gardens Plants">
+                <img src="Assets/aburi3.jpg" alt="Aburi Gardens Trees">
+                <img src="Assets/aburi4.jpg" alt="Aburi Gardens View">
+                <img src="Assets/aburi5.jpg" alt="Aburi Gardens Flowers">
+                <img src="Assets/aburi6.jpg" alt="Aburi Gardens Landscape">
             </div>
             
             <button class="book-btn" onclick="openBookingForm('Aburi Botanical Gardens', 'aburiModal')">Book This Site</button>
@@ -607,6 +868,80 @@
         </div>
     </div>
     
+    <!-- Hotel Booking Modal -->
+    <div id="hotelBookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hotelBookingModal')">&times;</span>
+            <h2>Book <span id="hotelName"></span></h2>
+            <form id="hotelBookingForm">
+                <div class="form-group">
+                    <label for="checkInDate">Check-in Date:</label>
+                    <input type="date" id="checkInDate" name="checkInDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="checkOutDate">Check-out Date:</label>
+                    <input type="date" id="checkOutDate" name="checkOutDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="numGuests">Number of Guests:</label>
+                    <input type="number" id="numGuests" name="numGuests" min="1" max="6" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="numRooms">Number of Rooms:</label>
+                    <input type="number" id="numRooms" name="numRooms" min="1" max="3" required>
+                </div>
+                
+                <div class="room-selection">
+                    <h3>Room Type</h3>
+                    <div class="room-option" onclick="selectRoom(this, 'standard')">
+                        <h4>Standard Room</h4>
+                        <p>Comfortable room with queen bed and basic amenities</p>
+                        <p><strong>$<span id="standardPrice">0</span>/night</strong></p>
+                    </div>
+                    
+                    <div class="room-option" onclick="selectRoom(this, 'deluxe')">
+                        <h4>Deluxe Room</h4>
+                        <p>Spacious room with king bed and premium amenities</p>
+                        <p><strong>$<span id="deluxePrice">0</span>/night</strong> (+20%)</p>
+                    </div>
+                    
+                    <div class="room-option" onclick="selectRoom(this, 'suite')">
+                        <h4>Suite</h4>
+                        <p>Luxury suite with separate living area and premium services</p>
+                        <p><strong>$<span id="suitePrice">0</span>/night</strong> (+50%)</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hotelFullName">Full Name:</label>
+                    <input type="text" id="hotelFullName" name="hotelFullName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hotelEmail">Email:</label>
+                    <input type="email" id="hotelEmail" name="hotelEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hotelPhone">Phone Number:</label>
+                    <input type="tel" id="hotelPhone" name="hotelPhone" required>
+                </div>
+                
+                <input type="hidden" id="selectedHotel" name="selectedHotel">
+                <input type="hidden" id="basePrice" name="basePrice">
+                <input type="hidden" id="selectedRoomType" name="selectedRoomType">
+                <input type="hidden" id="roomPrice" name="roomPrice">
+                <input type="hidden" id="totalNights" name="totalNights">
+                <input type="hidden" id="totalHotelCost" name="totalHotelCost">
+                
+                <button type="submit" class="book-btn">Complete Booking</button>
+            </form>
+        </div>
+    </div>
+    
     <!-- Receipt Modal -->
     <div id="receiptModal" class="modal">
         <div class="modal-content">
@@ -645,6 +980,66 @@
             
             <button class="book-btn" onclick="printReceipt()">Print Receipt</button>
             <button class="book-btn" onclick="closeModal('receiptModal')">Close</button>
+        </div>
+    </div>
+    
+    <!-- Hotel Receipt Modal -->
+    <div id="hotelReceiptModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('hotelReceiptModal')">&times;</span>
+            <h2>Hotel Booking Confirmation</h2>
+            <p>Thank you for your booking! Here's your receipt:</p>
+            
+            <div class="receipt hotel-receipt">
+                <h3>Hotel Booking Details</h3>
+                <div class="receipt-item">
+                    <span>Hotel:</span>
+                    <span id="hotelReceiptName"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Room Type:</span>
+                    <span id="hotelReceiptRoomType"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Check-in:</span>
+                    <span id="hotelReceiptCheckIn"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Check-out:</span>
+                    <span id="hotelReceiptCheckOut"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Nights:</span>
+                    <span id="hotelReceiptNights"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Guests:</span>
+                    <span id="hotelReceiptGuests"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Rooms:</span>
+                    <span id="hotelReceiptRooms"></span>
+                </div>
+                <div class="receipt-item">
+                    <span>Price per night:</span>
+                    <span id="hotelReceiptPrice"></span>
+                </div>
+                
+                <div class="receipt-total">
+                    <span>Total Cost:</span>
+                    <span id="hotelReceiptTotal"></span>
+                </div>
+            </div>
+            
+            <div class="customer-info">
+                <h3>Customer Information</h3>
+                <p><strong>Name:</strong> <span id="hotelReceiptCustomerName"></span></p>
+                <p><strong>Email:</strong> <span id="hotelReceiptEmail"></span></p>
+                <p><strong>Phone:</strong> <span id="hotelReceiptPhone"></span></p>
+            </div>
+            
+            <button class="book-btn" onclick="printHotelReceipt()">Print Receipt</button>
+            <button class="book-btn" onclick="closeModal('hotelReceiptModal')">Close</button>
         </div>
     </div>
     
@@ -708,6 +1103,23 @@
                 </thead>
                 <tbody></tbody>
             </table>
+            
+            <h3>Hotel Bookings</h3>
+            <table id="hotelBookingsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Hotel</th>
+                        <th>Room Type</th>
+                        <th>Nights</th>
+                        <th>Total</th>
+                        <th>Your Cut</th>
+                        <th>Dates</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
 
@@ -718,7 +1130,26 @@
         
         // Global variables
         let currentBooking = {};
+        let currentHotelBooking = {};
         const TICKET_PRICE = 20; // $20 per visitor
+        
+        // Function to show either attractions or hotels section
+        function showSection(section) {
+            if (section === 'attractions') {
+                document.getElementById('attractionsSection').style.display = 'block';
+                document.getElementById('hotelsSection').style.display = 'none';
+                document.getElementById('showAttractions').classList.add('active');
+                document.getElementById('showHotels').classList.remove('active');
+            } else {
+                document.getElementById('attractionsSection').style.display = 'none';
+                document.getElementById('hotelsSection').style.display = 'grid';
+                document.getElementById('showAttractions').classList.remove('active');
+                document.getElementById('showHotels').classList.add('active');
+            }
+        }
+        
+        // Initialize page to show attractions by default
+        showSection('attractions');
         
         // Function to open attraction modal
         function openAttractionModal(modalId) {
@@ -791,6 +1222,164 @@
             document.body.innerHTML = originalContent;
         }
         
+        // ===========================================
+        // HOTEL BOOKING FUNCTIONALITY
+        // ===========================================
+        
+        // Function to open hotel booking form
+        function openHotelBooking(hotelName, basePrice, hotelId) {
+            document.getElementById('hotelName').textContent = hotelName;
+            document.getElementById('selectedHotel').value = hotelName;
+            document.getElementById('basePrice').value = basePrice;
+            
+            // Set room prices
+            document.getElementById('standardPrice').textContent = basePrice;
+            document.getElementById('deluxePrice').textContent = Math.round(basePrice * 1.2);
+            document.getElementById('suitePrice').textContent = Math.round(basePrice * 1.5);
+            
+            // Set minimum dates
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkInDate').setAttribute('min', today);
+            document.getElementById('checkOutDate').setAttribute('min', today);
+            
+            // Reset form
+            document.getElementById('hotelBookingForm').reset();
+            document.querySelectorAll('.room-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.getElementById('selectedRoomType').value = '';
+            document.getElementById('roomPrice').value = '';
+            
+            document.getElementById('hotelBookingModal').style.display = "block";
+        }
+        
+        // Function to select room type
+        function selectRoom(element, roomType) {
+            // Remove selected class from all options
+            document.querySelectorAll('.room-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            const basePrice = parseFloat(document.getElementById('basePrice').value);
+            let price = basePrice;
+            
+            // Calculate price based on room type
+            if (roomType === 'deluxe') {
+                price = Math.round(basePrice * 1.2);
+            } else if (roomType === 'suite') {
+                price = Math.round(basePrice * 1.5);
+            }
+            
+            // Store selected room type and price
+            document.getElementById('selectedRoomType').value = roomType;
+            document.getElementById('roomPrice').value = price;
+        }
+        
+        // Function to calculate total nights
+        function calculateTotalNights(checkIn, checkOut) {
+            const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            const firstDate = new Date(checkIn);
+            const secondDate = new Date(checkOut);
+            
+            return Math.round(Math.abs((firstDate - secondDate) / oneDay));
+        }
+        
+        // Update check-out min date when check-in changes
+        document.getElementById('checkInDate').addEventListener('change', function() {
+            const checkInDate = this.value;
+            document.getElementById('checkOutDate').setAttribute('min', checkInDate);
+            
+            // If check-out is before check-in, reset it
+            if (document.getElementById('checkOutDate').value && 
+                document.getElementById('checkOutDate').value < checkInDate) {
+                document.getElementById('checkOutDate').value = '';
+            }
+        });
+        
+        // Handle hotel booking form submission
+        document.getElementById('hotelBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Calculate total nights
+            const checkIn = document.getElementById('checkInDate').value;
+            const checkOut = document.getElementById('checkOutDate').value;
+            const totalNights = calculateTotalNights(checkIn, checkOut);
+            
+            if (totalNights === 0) {
+                alert('Check-out date must be after check-in date');
+                return;
+            }
+            
+            if (!document.getElementById('selectedRoomType').value) {
+                alert('Please select a room type');
+                return;
+            }
+            
+            // Calculate total cost
+            const pricePerNight = parseFloat(document.getElementById('roomPrice').value);
+            const numRooms = parseInt(document.getElementById('numRooms').value);
+            const totalCost = pricePerNight * totalNights * numRooms;
+            
+            // Store booking data
+            currentHotelBooking = {
+                hotel: document.getElementById('selectedHotel').value,
+                roomType: document.getElementById('selectedRoomType').value,
+                checkIn: checkIn,
+                checkOut: checkOut,
+                totalNights: totalNights,
+                numGuests: parseInt(document.getElementById('numGuests').value),
+                numRooms: numRooms,
+                pricePerNight: pricePerNight,
+                totalCost: totalCost,
+                fullName: document.getElementById('hotelFullName').value,
+                email: document.getElementById('hotelEmail').value,
+                phone: document.getElementById('hotelPhone').value,
+                bookingDate: new Date().toISOString()
+            };
+            
+            // Save hotel booking
+            saveHotelBooking(currentHotelBooking);
+            
+            // Show receipt
+            displayHotelReceipt();
+            closeModal('hotelBookingModal');
+            document.getElementById('hotelReceiptModal').style.display = "block";
+        });
+        
+        // Function to display hotel receipt
+        function displayHotelReceipt() {
+            document.getElementById('hotelReceiptName').textContent = currentHotelBooking.hotel;
+            document.getElementById('hotelReceiptRoomType').textContent = currentHotelBooking.roomType.charAt(0).toUpperCase() + currentHotelBooking.roomType.slice(1) + ' Room';
+            document.getElementById('hotelReceiptCheckIn').textContent = currentHotelBooking.checkIn;
+            document.getElementById('hotelReceiptCheckOut').textContent = currentHotelBooking.checkOut;
+            document.getElementById('hotelReceiptNights').textContent = currentHotelBooking.totalNights;
+            document.getElementById('hotelReceiptGuests').textContent = currentHotelBooking.numGuests;
+            document.getElementById('hotelReceiptRooms').textContent = currentHotelBooking.numRooms;
+            document.getElementById('hotelReceiptPrice').textContent = '$' + currentHotelBooking.pricePerNight.toFixed(2);
+            document.getElementById('hotelReceiptTotal').textContent = '$' + currentHotelBooking.totalCost.toFixed(2);
+            
+            document.getElementById('hotelReceiptCustomerName').textContent = currentHotelBooking.fullName;
+            document.getElementById('hotelReceiptEmail').textContent = currentHotelBooking.email;
+            document.getElementById('hotelReceiptPhone').textContent = currentHotelBooking.phone;
+        }
+        
+        // Function to print hotel receipt
+        function printHotelReceipt() {
+            const printContent = document.querySelector('#hotelReceiptModal .modal-content').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+        }
+        
+        // ===========================================
+        // COMMON FUNCTIONALITY
+        // ===========================================
+        
         // Function to toggle mobile menu
         function toggleMenu() {
             const menuIcon = document.querySelector('.menu-icon');
@@ -817,6 +1406,7 @@
         };
         
         let allBookings = JSON.parse(localStorage.getItem('traditechBookings')) || [];
+        let allHotelBookings = JSON.parse(localStorage.getItem('traditechHotelBookings')) || [];
         
         // Show hidden admin button when pressing Ctrl+Alt+A
         document.addEventListener('keydown', function(e) {
@@ -848,6 +1438,16 @@
             localStorage.setItem('traditechBookings', JSON.stringify(allBookings));
         }
         
+        // Save hotel booking to storage
+        function saveHotelBooking(booking) {
+            // Add commission calculation
+            booking.commission = calculateCommission(booking.totalCost);
+            booking.adminEarnings = booking.totalCost - booking.commission;
+            
+            allHotelBookings.push(booking);
+            localStorage.setItem('traditechHotelBookings', JSON.stringify(allHotelBookings));
+        }
+        
         // Admin Panel Functions
         document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -864,14 +1464,20 @@
         });
         
         function loadAdminDashboard() {
-            document.getElementById('totalBookings').textContent = allBookings.length;
+            // Update site booking stats
+            document.getElementById('totalBookings').textContent = allBookings.length + allHotelBookings.length;
             
-            const totalRevenue = allBookings.reduce((sum, booking) => sum + booking.totalCost, 0);
+            const totalSiteRevenue = allBookings.reduce((sum, booking) => sum + booking.totalCost, 0);
+            const totalHotelRevenue = allHotelBookings.reduce((sum, booking) => sum + booking.totalCost, 0);
+            const totalRevenue = totalSiteRevenue + totalHotelRevenue;
             document.getElementById('totalRevenue').textContent = '$' + totalRevenue.toFixed(2);
             
-            const totalEarnings = allBookings.reduce((sum, booking) => sum + booking.commission, 0);
+            const totalSiteEarnings = allBookings.reduce((sum, booking) => sum + booking.commission, 0);
+            const totalHotelEarnings = allHotelBookings.reduce((sum, booking) => sum + booking.commission, 0);
+            const totalEarnings = totalSiteEarnings + totalHotelEarnings;
             document.getElementById('totalEarnings').textContent = '$' + totalEarnings.toFixed(2);
             
+            // Load site bookings table
             const tbody = document.querySelector('#bookingsTable tbody');
             tbody.innerHTML = '';
             
@@ -887,6 +1493,25 @@
                     <td>${new Date(booking.bookingDate).toLocaleDateString()}</td>
                 `;
                 tbody.appendChild(row);
+            });
+            
+            // Load hotel bookings table
+            const hotelTbody = document.querySelector('#hotelBookingsTable tbody');
+            hotelTbody.innerHTML = '';
+            
+            allHotelBookings.forEach((booking, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${booking.fullName}</td>
+                    <td>${booking.hotel}</td>
+                    <td>${booking.roomType.charAt(0).toUpperCase() + booking.roomType.slice(1)}</td>
+                    <td>${booking.totalNights}</td>
+                    <td>$${booking.totalCost.toFixed(2)}</td>
+                    <td>$${booking.commission.toFixed(2)}</td>
+                    <td>${booking.checkIn} to ${booking.checkOut}</td>
+                `;
+                hotelTbody.appendChild(row);
             });
         }
         
